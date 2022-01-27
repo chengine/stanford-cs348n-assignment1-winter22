@@ -29,10 +29,10 @@ def load_ply(fn):
     pc_array = np.array([[x, y, z] for x,y,z in pc])
     return pc_array
 
-def viz_mesh(v, f, figsize=(4, 4)):
+def viz_mesh(v, f, figsize=(4, 4), params=(20, 60)):
     fig = plt.figure(figsize=figsize)
     ax = fig.add_subplot(1, 1, 1, projection='3d')
-    ax.view_init(elev=20, azim=60)
+    ax.view_init(elev=params[0], azim=params[1])
     x = v[:, 0]
     y = v[:, 2]
     z = v[:, 1]
@@ -49,13 +49,16 @@ def viz_mesh(v, f, figsize=(4, 4)):
     ax.set_xlim(miv, mav)
     ax.set_ylim(miv, mav)
     ax.set_zlim(miv, mav)
+    ax.set_xlabel('X')
+    ax.set_ylabel('Y')
+    ax.set_zlabel('Z')
     plt.tight_layout()
     plt.show()
 
-def viz_pc(pc, figsize=(4, 4)):
+def viz_pc(pc, figsize=(4, 4), params=(20, 60)):
     fig = plt.figure(figsize=figsize)
     ax = fig.add_subplot(1, 1, 1, projection='3d')
-    ax.view_init(elev=20, azim=60)
+    ax.view_init(elev=params[0], azim=params[1])
     x = pc[:, 0]
     y = pc[:, 2]
     z = pc[:, 1]
@@ -65,14 +68,20 @@ def viz_pc(pc, figsize=(4, 4)):
     ax.set_xlim(miv, mav)
     ax.set_ylim(miv, mav)
     ax.set_zlim(miv, mav)
+    ax.set_xlabel('X')
+    ax.set_ylabel('Y')
+    ax.set_zlabel('Z')
     plt.tight_layout()
     plt.show()
 
-def viz_bv(bv, figsize=(4, 4)):
+def viz_bv(bv, figsize=(4, 4), params=(20, 60)):
     fig = plt.figure(figsize=figsize)
     ax = fig.add_subplot(1, 1, 1, projection='3d')
-    ax.view_init(elev=20, azim=60)
+    ax.view_init(elev=params[0], azim=params[1])
     ax.voxels(bv, edgecolor='k')
+    ax.set_xlabel('X')
+    ax.set_ylabel('Y')
+    ax.set_zlabel('Z')
     plt.tight_layout()
     plt.show()
 

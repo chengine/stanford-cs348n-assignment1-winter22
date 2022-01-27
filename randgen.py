@@ -79,7 +79,7 @@ with torch.no_grad():
     # decode the pcs
     feats_dec = network.sample_decoder(zs)
     pcs_dec = network.decoder(feats_dec)
-
+ 
     # visu
     for j in range(32):
         utils.render_pts(os.path.join(result_dir, 'randomgen-%02d.png'%j), pcs_dec[j].cpu().numpy())

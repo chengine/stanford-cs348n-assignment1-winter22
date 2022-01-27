@@ -39,14 +39,31 @@ class PointNet(nn.Module):
         # STUDENT CODE START
         # use self.conv1-4 and self.bn1-4 to extract per-point features
         # do not forget about the non-linear activation functions (e.g. ReLU)
+        self.relu = nn.ReLU()
 
+        net = self.conv1(net)
+        net = self.relu(self.bn1(net))
+
+        net = self.conv2(net)
+        net = self.relu(self.bn2(net))
+
+        net = self.conv3(net)
+        net = self.relu(self.bn3(net))
+
+        net = self.conv4(net)
+        net = self.relu(self.bn4(net))
 
         # get the global shape feature using a max-pooling operation
-
+        net = torch.max(net, 2, keepdim=True)[0]
+        net = net.view(-1, 1024)
 
         # use self.fc1/2 and self.bn5/6 for the global feature MLP
         # do not forget about the non-linear activation functions (e.g. ReLU)
+        net = self.fc1(net)
+        net = self.relu(self.bn5(net))
 
+        net = self.fc2(net)
+        net = self.relu(self.bn6(net))
         # STUDENT CODE END
         
         return net
@@ -82,7 +99,10 @@ class Sampler(nn.Module):
             logvar = self.mlp2var(encode)
 
             # STUDENT CODE START
+            eps = torch.randn(logvar.shape).cuda()
+            ret = mu + torch.exp(logvar)*eps
 
+            kld = 0.5*(1 + logvar - mu**2 - torch.exp(2*logvar))
 
             # STUDENT CODE END
 
@@ -131,7 +151,14 @@ class FCDecoder(nn.Module):
         # STUDENT CODE START
         # we do not use batch-norm for decoding
         # but we do need non-linear activation functions (e.g. ReLU)
+        self.relu = nn.ReLU()
+        net = self.relu(self.mlp1(feat))
 
+        net = self.relu(self.mlp2(net))
+
+        net = self.mlp3(net)
+
+        net = net.view(batch_size, -1, 3)
 
         # STUDENT CODE END
 
