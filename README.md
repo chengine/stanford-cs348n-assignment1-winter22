@@ -57,3 +57,4 @@ Each experiment run will output a directory with name `exp-ae` for AE and `exp-v
 Please ask TA or post on Piazza for any question.
 Please do not use the Github Issue for Q&As for the class.
 
+# stanford-cs348n-assignment1-winter22
